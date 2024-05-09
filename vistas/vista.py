@@ -53,6 +53,14 @@ class StudentView:
 
         self.button_search = Button(self.frame, text="Search", command=self.search_student)
         self.button_search.grid(row=6, column=2)
+        
+        # Botón Eliminar por ID
+        self.button_delete_by_id = Button(self.frame, text="Delete by ID", command=self.delete_student_by_id)
+        self.button_delete_by_id.grid(row=7, column=1)
+
+        # Botón Eliminar todos los estudiantes
+        self.button_delete_all = Button(self.frame, text="Delete All", command=self.delete_all_students)
+        self.button_delete_all.grid(row=8, column=1)
 
         self.listbox = Listbox(self.frame, width=20, height=5)
         self.listbox.grid(row=10, columnspan=4)
@@ -81,3 +89,16 @@ class StudentView:
         students = self.controller.get_all_students()
         for student in students:
             self.listbox.insert(END, student)
+
+    def delete_student_by_id(self):
+        id = self.entry_id.get()
+        self.controller = StudentController()
+        self.controller.delete_student_by_id(id)
+        # Actualizar la lista después de eliminar el estudiante
+        self.list_students()
+
+    def delete_all_students(self):
+        self.controller = StudentController()
+        self.controller.delete_all_students()
+        # Limpiar la lista después de eliminar todos los estudiantes
+        self.listbox.delete(0, END)

@@ -24,6 +24,28 @@ class StudentModel:
         cursor.execute(query)
         rows = cursor.fetchall()
         return rows
+    
+    def delete_student_by_id(self, id):
+        cursor = self.conn.cursor()
+        query = '''DELETE FROM students WHERE id = %s'''
+        cursor.execute(query, (id,))
+        self.conn.commit()
+
+        # Ajustar la secuencia
+        query_adjust_sequence = '''SELECT setval('students_id_seq', (SELECT COALESCE(MAX(id),0)+1 FROM students), false)'''
+        cursor.execute(query_adjust_sequence)
+        self.conn.commit()
+
+    def delete_all_students(self):
+        cursor = self.conn.cursor()
+        query = '''DELETE FROM students'''
+        cursor.execute(query)
+        self.conn.commit()
+
+        # Reiniciar la secuencia
+        query_reset_sequence = '''ALTER SEQUENCE students_id_seq RESTART WITH 1'''
+        cursor.execute(query_reset_sequence)
+        self.conn.commit()
 
     def close_connection(self):
         self.conn.close()
