@@ -52,11 +52,11 @@ class StudentView:
         self.entry_id.grid(row=6, column=1)
 
         self.button_search = Button(self.frame, text="Search", command=self.search_student)
-        self.button_search.grid(row=6, column=2)
+        self.button_search.grid(row=7, column=1)
         
         # Botón Eliminar por ID
         self.button_delete_by_id = Button(self.frame, text="Delete by ID", command=self.delete_student_by_id)
-        self.button_delete_by_id.grid(row=7, column=1)
+        self.button_delete_by_id.grid(row=6, column=2)
 
         # Botón Eliminar todos los estudiantes
         self.button_delete_all = Button(self.frame, text="Delete All", command=self.delete_all_students)
