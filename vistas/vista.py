@@ -63,9 +63,21 @@ class StudentView:
         address = self.entry_address.get()
         self.controller = StudentController()
         self.controller.save_new_student(name, age, address)
+        self.list_students()
 
     def search_student(self):
         id = self.entry_id.get()
         self.controller = StudentController()
         student = self.controller.search_student(id)
-        self.listbox.insert(END, student)
+        self.listbox.delete(0, END)  # Limpiar la lista antes de mostrar el estudiante encontrado
+        if student:
+            self.listbox.insert(END, student)
+
+    def list_students(self):
+        # Limpiar la lista antes de mostrar los estudiantes
+        self.listbox.delete(0, END)
+        # Obtener todos los estudiantes y mostrarlos en el listbox
+        self.controller = StudentController()
+        students = self.controller.get_all_students()
+        for student in students:
+            self.listbox.insert(END, student)
